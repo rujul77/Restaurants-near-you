@@ -25,24 +25,28 @@ def home():
                 get_api = requests.get(api_link, headers=headers)
                 finalData = get_api.json() #turn into json format
                 unfiltered_restaurant = finalData.get("restaurants", [])[:10]
-
+                
+                #if there are no restaurants found in the list[]
                 if not unfiltered_restaurant:
                     error = "No restaurants found for that postcode!"
                 else:
+
+                    #loop through the list, and append what i need to restaurants[]
                     for restaurant in unfiltered_restaurant:
                         cuisines = ", ".join(cuisine["name"] for cuisine in restaurant["cuisines"])
                         restaurants.append({
                             "name":restaurant["name"],
-
+                            
                             "cuisines": cuisines,
 
-                            "address": f'{restaurant["address"]["firstLine"], restaurant["address"]["postalCode"]}',
+                            "address": f'{restaurant["address"]["firstLine"]}, {restaurant["address"]["postalCode"]}',
 
                             "rating": f'{restaurant["rating"]["starRating"]}({restaurant["rating"]["count"]})',
 
                             "logo": restaurant["logoUrl"]
                         })
-
+            
+            #anything other than above goes wrong    
             except:
                 error = "Something went wrong!"
         

@@ -18,14 +18,14 @@
     </form>
 </div>
 
-<!-- Error Message -->
+<!-- error message -->
 {% if error %}
-<div class="container mt-3 fs-4 text-lg-center">
+<div class="container mt-3 fs-5 text-lg-center">
     <p style="color: white;">{{ error }}</p>
 </div>
 {% endif %}
 
-<!-- Results Section -->
+<!-- the actual restaurant list in cards -->
 {% if restaurants %}
 <div class="container mt-5">
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
@@ -38,8 +38,8 @@
                 {% endif %}
                 <div class="card-body">
                     <h5 class="card-title" style="color: white;">{{ restaurant["name"]}}</h5>
-                    <p class="card-text mb-1" style="color: #bbbbbb;">🍽️ {{ restaurant["cuisines"] }}</p>
-                    <p class="card-text small" style="color: #999999;">📍 {{ restaurant["address"] }}</p>
+                    <p class="card-text mb-1" style="color: #bbbbbb;"> {{ restaurant["cuisines"] }}</p>
+                    <p class="card-text small" style="color: #999999;"> {{ restaurant["address"] }}</p>
                     <p class="card-text mb-1" style="color: #bbbbbb;">⭐ {{ restaurant["rating"] }}</p>
                 </div>
             </div>
