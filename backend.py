@@ -22,11 +22,11 @@ def home():
 
         #loop through and get name, cuisine, address and rating
         for restaurant in finalData.get("restaurants", [])[:10]:
-            cuisines = ", ".join(c["name"] for c in restaurant.get("cuisines", []))
+            cuisines = ", ".join(cuisine["name"] for cuisine in restaurant.get("cuisines", []))
             restaurants.append({
                 "name": restaurant["name"],
                 "cuisines": cuisines,
-                "rating": restaurant["rating"]["starRating"],
+                "rating": f'{restaurant["rating"]["starRating"]} ({restaurant["rating"]["count"]})',
                 "address": f'{restaurant["address"]["firstLine"]}, {restaurant["address"]["postalCode"]}',
                 "logo": restaurant.get("logoUrl")
                 })
