@@ -1,8 +1,6 @@
 from flask import Flask, request, render_template #this request gets data from the input - sent as post
 import requests #sends request to our outlined api link
 
-import pytest #unit testing
-
 app = Flask(__name__)
 
 def restaurant_list(postcode): 
@@ -15,16 +13,16 @@ def restaurant_list(postcode):
     final_data = get_api.json() #raw data into json
 
     restaurants = []
-    for restaurant in final_data.get("restaurants")[:10]: #only the first 10 restaurant keys
-        cuisines = ""
+    
+    for restaurant in final_data.get("restaurants")[:10]: #only the first 10 restaurant keys        
+        cuisines = "".strip(",")
         for cuisine in restaurant["cuisines"]:
-            cuisines+= ", ".join(cuisine.get("name"))
-        
+            cuisines+= cuisine.get("name") + ", "
         restaurants.append({
             "name": restaurant["name"],
             "cuisines": cuisines,
             "rating": f'{restaurant["rating"]["starRating"]}({restaurant["rating"]["count"]})',
-            "address": f'{restaurant["address"]["firstLine"], {restaurant["address"]["postalCode"]}}',
+            "address": f'{restaurant["address"]["firstLine"]}, {restaurant["address"]["postalCode"]}',
             "logo": restaurant["logoUrl"]
         })
     
