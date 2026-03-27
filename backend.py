@@ -21,15 +21,15 @@ def home():
         finalData = get_api.json() #turn into json format
 
         #loop through and get name, cuisine, address and rating
-        for resturants in finalData.get("restaurants", [])[:10]:
-            cuisines = ", ".join(c["name"] for c in r.get("cuisines", []))
+        for restaurant in finalData.get("restaurants", [])[:10]:
+            cuisines = ", ".join(c["name"] for c in restaurant.get("cuisines", []))
             restaurants.append({
                 "name": restaurants["name"],
-                "cuisines": restaurants[cuisines]
+                "cuisines": cuisines,
                 "rating": restaurants["rating"]["starRating"],
-                "address": restaurants["address"]["firstLine"], restaurants["address"]["postcalCode"]
-            })
-            
+                "address": f"{restaurants["address"]["firstLine"]}, {restaurants["address"]["postalCode"]}" 
+                })
+        
     return render_template("index.html", restaurants=restaurants)
     
 if __name__ == "__main__":
