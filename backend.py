@@ -20,9 +20,16 @@ def home():
         get_api = requests.get(api_link, headers=headers)
         finalData = get_api.json() #turn into json format
 
-        #get resturant keys from json data, if not found, return empty list. get the first 10
-        restaurants = finalData.get("restaurants", [])[:10]
-
+        #loop through and get name, cuisine, address and rating
+        for resturants in finalData.get("restaurants", [])[:10]:
+            cuisines = ", ".join(c["name"] for c in r.get("cuisines", []))
+            restaurants.append({
+                "name": restaurants["name"],
+                "cuisines": restaurants[cuisines]
+                "rating": restaurants["rating"]["starRating"],
+                "address": restaurants["address"]["firstLine"], restaurants["address"]["postcalCode"]
+            })
+            
     return render_template("index.html", restaurants=restaurants)
     
 if __name__ == "__main__":
