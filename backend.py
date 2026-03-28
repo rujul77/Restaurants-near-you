@@ -5,17 +5,17 @@ app = Flask(__name__)
 
 def restaurant_list(postcode): 
     api_link =  f"https://uk.api.just-eat.io/discovery/uk/restaurants/enriched/bypostcode/{postcode}"
+    
+    #without this 403 cloudflare error
     headers = {"User-Agent": "Mozilla/5.0"}
 
     get_api = requests.get(api_link, headers=headers, timeout=10) #dont wait forever for server
-    
+
     #if unable to get api data - cause an error and stop the program
     get_api.raise_for_status()
-    
     final_data = get_api.json() #raw data into json
 
     restaurants = []
-    
     #loop logic to store all information we need to show
     for restaurant in final_data.get("restaurants")[:10]: #only the first 10 restaurant keys        
         cuisines = ""
@@ -51,8 +51,11 @@ def home():
             #anything other than above goes wrong    
             except requests.exceptions.RequestException:
                 error="Something went wrong"                
-        
-    return render_template("index.html", restaurants=restaurants, error=error)
+
+    # bridge between backend and frontend. 
+    # first parram =  template file to render.
+    # subsequent variables = python variables to Jinja names, 
+    return render_template("index.html", restaurants=restaurants, error=error, postcode=postcode)
     
 if __name__ == "__main__":
     app.run(debug=True) 
