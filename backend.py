@@ -24,7 +24,7 @@ def restaurant_list(postcode):
         restaurants.append({
             "name": restaurant["name"],
             "cuisines": cuisines,
-            "rating": f'{restaurant["rating"]["starRating"]}({restaurant["rating"]["count"]})',
+            "rating": f'{restaurant["rating"]["starRating"]}',
             "address": f'{restaurant["address"]["firstLine"]}, {restaurant["address"]["postalCode"]}',
             "logo": restaurant["logoUrl"]
         })
@@ -55,7 +55,7 @@ def home():
     # bridge between backend and frontend. 
     # first parram =  template file to render.
     # subsequent variables = python variables to Jinja names, 
-    return render_template("index.html", restaurants=restaurants, error=error, postcode=postcode)
+    return render_template("index.html", restaurants=restaurants, error=error)
     
 if __name__ == "__main__":
-    app.run(debug=True) 
+    app.run(debug=True)
